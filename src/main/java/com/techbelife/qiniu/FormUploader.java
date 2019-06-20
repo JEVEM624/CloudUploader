@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
 
 
 public class FormUploader implements Runnable {
-    int retryTime = Integer.valueOf(PropertiesUtils.getProperty("retrytimes"));
+    private static final int retryTime = Integer.valueOf(PropertiesUtils.getProperty("retrytimes"));
     private File file;
 
     public FormUploader(File file) {

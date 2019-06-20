@@ -160,12 +160,21 @@ public final class Base64 {
         return new String(encode(input, flags), StandardCharsets.US_ASCII);
     }
 
+    public static String safeEncodeToString(byte[] input) {
+        return new String(encode(input, URL_SAFE | NO_WRAP), StandardCharsets.US_ASCII);
+    }
+
+    public static String EncodeToString(byte[] input) {
+        return new String(encode(input, DEFAULT), StandardCharsets.US_ASCII);
+    }
+
     public static String encode(String s,int flags){
         return encodeToString(s.getBytes(),flags);
     }
 
+
     public static String safeEncode(String s){
-        return encode(s, Base64.URL_SAFE|Base64.NO_WRAP);
+        return encode(s, URL_SAFE | NO_WRAP);
     }
 
     //  --------------------------------------------------------

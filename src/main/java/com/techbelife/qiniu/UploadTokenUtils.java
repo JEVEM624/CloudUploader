@@ -28,7 +28,8 @@ public class UploadTokenUtils {
     public static String getEncodeSign(String encodedPutPolicy) {
         String sign = null;
         try {
-            sign = HMACSHA1Utils.HmacSHA1Encrypt(encodedPutPolicy, SK);
+            byte[] sha1 = HMACSHA1Utils.HmacSHA1Encrypt(encodedPutPolicy, SK);
+            sign = Base64.safeEncodeToString(sha1);
         } catch (Exception e) {
             e.getMessage();
         }

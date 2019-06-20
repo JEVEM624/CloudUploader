@@ -9,6 +9,7 @@ import java.util.Properties;
 public class PropertiesUtils {
 
     private static Properties props;
+    private static boolean dev = false;
 
     static {
         loadProps();
@@ -19,7 +20,11 @@ public class PropertiesUtils {
         props = new Properties();
         InputStream in = null;
         try {
-            in = PropertiesUtils.class.getClassLoader().getResourceAsStream("Configuration.properties");
+            if (dev) {
+                in = PropertiesUtils.class.getClassLoader().getResourceAsStream("dev.properties");
+            } else {
+                in = PropertiesUtils.class.getClassLoader().getResourceAsStream("CloudUploader.properties");
+            }
             props.load(in);
         } catch (FileNotFoundException e) {
             System.out.println("Profile not found");

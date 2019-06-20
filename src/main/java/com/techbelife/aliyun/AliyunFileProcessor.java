@@ -1,4 +1,4 @@
-package com.techbelife.qiniu;
+package com.techbelife.aliyun;
 
 import com.techbelife.Interface.FileProcessor;
 
@@ -8,15 +8,15 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 
-public class QiniuFileProcessor implements FileProcessor {
+public class AliyunFileProcessor implements FileProcessor {
     private static final long MAX_SIMPLE_UPLOAD_SIZE = 10485760;
     private ThreadPoolExecutor threadPoolExecutor;
-    private FormUpload formUpload;
+    private SimpleUpload simpleUpload;
     private SliceUpload sliceUpload;
 
-    public QiniuFileProcessor() {
+    public AliyunFileProcessor() {
         threadPoolExecutor = new ThreadPoolExecutor(uploadThreadNums, uploadThreadNums, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
-        formUpload = new FormUpload(threadPoolExecutor);
+        simpleUpload = new SimpleUpload(threadPoolExecutor);
         sliceUpload = new SliceUpload(threadPoolExecutor);
     }
 
@@ -24,7 +24,7 @@ public class QiniuFileProcessor implements FileProcessor {
     public void uploadFile(String path) {
         File file = new File(path);
         if (file.length() < MAX_SIMPLE_UPLOAD_SIZE) {
-            formUpload.submitFile(file);
+            simpleUpload.submitFile(file);
         } else {
             sliceUpload.submitFile(file);
         }

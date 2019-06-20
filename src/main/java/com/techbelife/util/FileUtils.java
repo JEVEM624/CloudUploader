@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -23,13 +24,18 @@ public class FileUtils {
         int count = (int) Math.ceil(file.length() / (double) byteSize);
 
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(count, count * 3, 1, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(count * 2));
+        CountDownLatch countDownLatch = new CountDownLatch(count);
         for (int i = 0; i < count; i++) {
             String partFileName = file.getName() + "." + (i + 1);
             threadPool.execute(new SplitRunnable(byteSize, i * byteSize,
-                    partFileName, file));
+                    partFileName, file, countDownLatch));
             parts.add(partFileName);
         }
-
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return parts;
     }
 
@@ -38,13 +44,15 @@ public class FileUtils {
         String partFileName;
         File originFile;
         int startPos;
+        CountDownLatch countDownLatch;
 
         public SplitRunnable(int byteSize, int startPos, String partFileName,
-                             File file) {
+                             File file, CountDownLatch countDownLatch) {
             this.startPos = startPos;
             this.byteSize = byteSize;
             this.partFileName = partFileName;
             this.originFile = file;
+            this.countDownLatch = countDownLatch;
         }
 
         @Override
@@ -63,6 +71,8 @@ public class FileUtils {
                 randomAccessFile.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                countDownLatch.countDown();
             }
         }
     }

@@ -31,11 +31,8 @@ public class SliceUpload {
             }
             MakeFile makeFile = new MakeFile(countDownLatch, treeMap, file, token);
             threadPoolExecutor.submit(makeFile);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
 }

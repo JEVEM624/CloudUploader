@@ -9,8 +9,7 @@ public class HMACSHA1Utils {
     private static final String MAC_NAME = "HmacSHA1";
     private static final String ENCODING = "UTF-8";
 
-
-    public static String HmacSHA1Encrypt(String encryptText, String encryptKey) throws Exception {
+    public static byte[] HmacSHA1Encrypt(String encryptText, String encryptKey) throws Exception {
 
         byte[] data = encryptKey.getBytes(ENCODING);
 
@@ -24,7 +23,7 @@ public class HMACSHA1Utils {
 
         byte[] encode = mac.doFinal(text);
 
-        return Base64.encodeToString(encode, Base64.URL_SAFE | Base64.NO_WRAP);
+        return encode;
     }
 
 }
