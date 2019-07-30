@@ -8,11 +8,11 @@
 
 - [x] 七牛[(https://www.qiniu.com/)](https://www.qiniu.com/) 
 - [X] 阿里云[(https://www.aliyun.com/)](https://www.aliyun.com/)
-
+- [X] 腾讯云[(https://cloud.tencent.com/)](https://cloud.tencent.com/)
+- [X] 又拍云[(https://www.upyun.com/)](https://www.upyun.com/)
 ## comming soon
 
-- [ ] 腾讯云
-- [ ] 又拍云
+- [ ] AWS
 
 ## 使用方法
 
@@ -47,6 +47,24 @@ aliyun.AK=  #阿里云 AccessKey
 aliyun.SK=  #阿里云SecretKet
 aliyun.bucket=  #阿里云OSS Bucket名
 aliyun.ossDomain= #阿里云 Bucket 域名
+
+```
+
+腾讯云配置
+
+```properties
+qcloud.SI= #腾讯云SecretId
+qcloud.SK= #腾讯云SecretKey
+qcloud.ossDomain= #腾讯云对象存储访问域名
+
+```
+
+又拍云配置
+
+```properties
+upyun.operator= #操作员帐号
+upyun.password= #操作员密码
+upyun.bucket= #又拍云存储 Bucket 名
 
 ```
 2.在需要使用的地方获取CloudUploader对象

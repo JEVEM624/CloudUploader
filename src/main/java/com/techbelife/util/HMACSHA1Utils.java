@@ -3,6 +3,7 @@ package com.techbelife.util;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
 
 public class HMACSHA1Utils {
@@ -24,6 +25,11 @@ public class HMACSHA1Utils {
         byte[] encode = mac.doFinal(text);
 
         return encode;
+    }
+
+    public static String HmacSHA1HEX(String encryptText, String encryptKey) throws Exception{
+        byte[]bytes=HmacSHA1Encrypt(encryptText, encryptKey);
+        return DatatypeConverter.printHexBinary(bytes);
     }
 
 }

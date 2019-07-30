@@ -39,7 +39,7 @@ public class CloudUploader {
     }
 
     public void put(String path) {
-        File file=new File(path);
+        File file = new File(path);
         if (file.isDirectory()) {
             LinkedList<File> directoryList = new LinkedList<>();
             directoryList.add(file);
